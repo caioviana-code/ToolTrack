@@ -14,9 +14,6 @@ class Ferramenta extends Model {
     protected $fillable = [
         'nome',
         'tipo',
-        'marca',
-        'quantidadeDisponivel',
-        'quantidadeEmprestada',
-        'quantidadeReservada'     
+        'marca', 
     ];
 }

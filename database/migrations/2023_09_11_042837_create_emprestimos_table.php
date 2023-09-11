@@ -15,7 +15,7 @@ class CreateEmprestimosTable extends Migration {
             $table->string('funcionario');
             $table->integer('quantidade');
             $table->timestamp('dataEmprestimo');
-            $table->timestamp('dataDevolucaoPrevista');
+            $table->timestamp('dataDevolucaoPrevista')->nullable();
             $table->timestamp('dataDevolucao')->nullable();
             $table->string('status');
             $table->softDeletes();
