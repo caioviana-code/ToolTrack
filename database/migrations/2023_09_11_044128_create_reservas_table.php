@@ -15,6 +15,7 @@ class CreateReservasTable extends Migration {
             $table->integer('quantidade');
             $table->timestamp('dataReserva');
             $table->timestamp('dataRetirada')->nullable();
+            $table->timestamp('dataDevolucao')->nullable();
             $table->string('status');
             $table->softDeletes();
             $table->timestamps();

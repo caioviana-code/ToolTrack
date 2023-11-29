@@ -15,5 +15,8 @@ class Ferramenta extends Model {
         'nome',
         'tipo',
         'marca', 
+        'quantidadeDisponivel',
+        'quantidadeEmprestada',
+        'quantidadeReservada'
     ];
 }

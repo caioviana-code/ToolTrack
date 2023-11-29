@@ -22,6 +22,18 @@ class FerramentaController extends Controller {
 
     public function store(Request $request) {
 
+        $regras = [
+            'nome' => 'required',
+            'tipo' => 'required',
+            'marca' => 'required',
+        ];
+
+        $msgs = [
+            "required" => 'O preenchimento do campo :attribute é obrigatório!',
+        ];
+
+        $request->validate($regras, $msgs);
+
         Ferramenta::create([
             'nome' => $request->nome,
             'tipo' => $request->tipo,
@@ -42,12 +54,24 @@ class FerramentaController extends Controller {
         
         $data = Ferramenta::find($id);
 
-        if (!isset($dta)) {return "<h1>ID: $id não encontrado!</h1>";}
+        if (!isset($data)) {return "<h1>ID: $id não encontrado!</h1>";}
 
         return view('ferramentas.edit', compact('data'));
     }
 
     public function update(Request $request, $id) {
+
+        $regras = [
+            'nome' => 'required',
+            'tipo' => 'required',
+            'marca' => 'required',
+        ];
+
+        $msgs = [
+            "required" => 'O preenchimento do campo :attribute é obrigatório!',
+        ];
+
+        $request->validate($regras, $msgs);
         
         $obj = Ferramenta::find($id);
 

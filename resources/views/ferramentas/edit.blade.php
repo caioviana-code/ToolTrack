@@ -1,30 +1,23 @@
 <!-- Herda o layout padrão definido no template "main" -->
-@extends('templates.middleware', ['titulo' => "Nova Ferramenta", 'rota' => "ferramentas.create"])
+@extends('templates.middleware', ['titulo' => "Alterar Ferramenta"])
 <!-- Preenche o conteúdo da seção "titulo" -->
 @section('titulo') Ferramentas @endsection
 <!-- Preenche o conteúdo da seção "conteudo" -->
 @section('conteudo')
 
-    <form action="{{ route('ferramentas.store') }}" method="POST">
+    <form action="{{ route('ferramentas.update', $data->id) }}" method="POST">
         @csrf
+        @method('PUT')
         <div class="row">
             <div class="col" >
                 <div class="form-floating mb-3">
                     <input 
                         type="text" 
-                        class="form-control {{ $errors->has('nome') ? 'is-invalid' : '' }}" 
+                        class="form-control" 
                         name="nome" 
                         placeholder="nome"
-                        value="{{old('nome')}}"
+                        value="{{$data->nome}}"
                     />
-
-                    @if($errors->has('nome'))
-
-                        <div class="invalid-feedback">
-                            {{ $errors->first('nome') }}
-                        </div>
-
-                    @endif
 
                     <label for="nome">Nome da Ferramenta</label>
                 </div>
@@ -33,17 +26,14 @@
         <div class="row">
             <div class="col" >
                 <div class="form-floating mb-3">
-                    <select name="tipo" class="form-control">
-                        <option value="manual">Manual</option>
-                        <option value="eletrica">Elétrica</option>
-                        <option value="medicao">Medição</option>
-                        <option value="corte">Corte</option>
-                        <option value="pintura">Pintura</option>
-                        <option value="seguranca">Segurança</option>
-                        <option value="soldagem">Soldagem</option>
-                        <option value="escavacao">Escavação</option>
-                        <option value="outro">Outro</option>
-                    </select>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        name="tipo" 
+                        placeholder="tipo"
+                        value="{{$data->tipo}}"
+                    />
+
                     <label for="tipo">Tipo</label>
                 </div>
             </div>
@@ -53,19 +43,11 @@
                 <div class="form-floating mb-3">
                     <input 
                         type="text" 
-                        class="form-control {{ $errors->has('marca') ? 'is-invalid' : '' }}" 
+                        class="form-control" 
                         name="marca" 
                         placeholder="marca"
-                        value="{{old('marca')}}"
+                        value="{{$data->marca}}"
                     />
-
-                    @if($errors->has('marca'))
-
-                        <div class="invalid-feedback">
-                            {{ $errors->first('marca') }}
-                        </div>
-
-                    @endif
 
                     <label for="marca">Marca</label>
                 </div>
@@ -76,19 +58,11 @@
                 <div class="form-floating mb-3">
                     <input 
                         type="text" 
-                        class="form-control {{ $errors->has('quantidadeDisponivel') ? 'is-invalid' : '' }}" 
+                        class="form-control" 
                         name="quantidade" 
                         placeholder="quantidade"
-                        value="{{old('quantidade')}}"
-                    /> 
-
-                    @if($errors->has('quantidadeDisponivel'))
-
-                        <div class="invalid-feedback">
-                            {{ $errors->first('quantidadeDisponivel') }}
-                        </div>
-
-                    @endif
+                        value="{{$data->quantidadeDisponivel}}"
+                    />
 
                     <label for="quantidade">Quantidade</label>
                 </div>

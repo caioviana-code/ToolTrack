@@ -1,9 +1,9 @@
 @extends('templates.middleware', [
-'titulo' => "Ferramentas",
-'rota' => "ferramentas.create"
+'titulo' => "Reservas",
+'rota' => "reservas.create"
 ])
 
-@section('titulo') Ferramentas @endsection
+@section('titulo') Reservas @endsection
 
 @section('conteudo')
 
@@ -29,76 +29,64 @@
         #coluna {
             width: 180px;
             /* Ajuste o tamanho conforme necessário */
-        }  
-
-        .css-button {
-            padding: 5px 10px;
-            font-size: 10px;
-            text-align: center;
-            text-decoration: none;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background-color: #247BA0;
-            color: #fff;
-        }
-
-        .css-button:hover {
-            background-color: #2980b9;
         }
     </style>
-
 </head>
 
 <div>
 
     <div class="mb-3 div-filtro">
-
+        <!-- Adiciona um botão para escolher a coluna -->
         <select id="coluna" class="form-select">
-            <option value="nome">Nome</option>
-            <option value="tipo">Tipo</option>
-            <option value="marca">Marca</option>
+            <option value="ferramenta">Ferramenta</option>
+            <option value="funcionario">Funcionário</option>
+            <option value="dataReserva">Data Reserva</option>
+            <option value="dataRetirada">Data Retirada</option>
+            <option value="status">Status</option>
         </select>
 
         <input type="text" class="form-control" id="filtro" placeholder="Filtro" />
-
-        <!-- Adiciona um botão para escolher a coluna -->
     </div>
 
     <table class="table align-middle caption-top table-striped">
 
         <thead>
             <tr>
-                <th scope="col">Nome</th>
-                <th scope="col" class="d-none d-md-table-cell">Tipo</th>
-                <th scope="col">Marca</th>
-                <th scope="col" class="d-none d-md-table-cell">Disponível</th>
+                <th scope="col">Ferramenta</th>
+                <th scope="col" class="d-none d-md-table-cell">Funcionário</th>
+                <th scope="col">Quantidade</th>
+                <th scope="col" class="d-none d-md-table-cell">Data Reserva</th>
+                <th scope="col">Data Retirada</th>
+                <th scope="col" class="d-none d-md-table-cell">Status</th>
                 <th scope="col">Ações</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($data as $item)
             <tr class="row-filtro">
-                <td data-coluna="nome">{{ $item->nome }}</td>
-                <td data-coluna="tipo">{{ $item->tipo }}</td>
-                <td data-coluna="marca">{{ $item->marca }}</td>
-                <td>{{ $item->quantidadeDisponivel }}</td>
+                <td data-coluna="ferramenta">{{ $item->ferramenta->nome }}</td>
+                <td data-coluna="funcionario">{{ $item->funcionario }}</td>
+                <td>{{ $item->quantidade }}</td>
+                <td data-coluna="dataReserva">{{ $item->dataReserva }}</td>
+                <td data-coluna="dataRetirada">{{ $item->dataRetirada }}</td>
+                <td data-coluna="status">{{ $item->status }}</td>
                 <td>
-                    <a href="{{ route('ferramentas.edit', $item->id) }}" class="btn">
-                        <button class="ml-3 css-button">
-                            Editar
-                        </button>
+                    <a href="{{ route('reservas.edit', $item->id) }}" class="btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#247BA0" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z" />
+                            <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z" />
+                        </svg>
                     </a>
 
-                    <a nohref style="cursor:pointer" onclick="showInfoModal
-                    ('NOME: {{ $item->nome }}', 
-                    'TIPO: {{ $item->tipo }}',
-                    'MARCA: {{ $item->marca }}',
-                    'QUANTIDADE DISPONIVEL: {{ $item->quantidadeDisponivel }}',
-                    'QUANTIDADE EMPRESTADA: {{ $item->quantidadeEmprestada }}',
-                    'QUANTIDADE RESERVADA: {{ $item->quantidadeReservada }}'
-                    )",           
-                    class="btn">
+                    <a nohref style="cursor:pointer" onclick="showInfoModal(
+                        'FERRAMENTA: {{ $item->ferramenta->nome }}',
+                        'FUNCIONÁRIO: {{ $item->funcionario }}',
+                        'QUANTIDADE: {{ $item->quantidade }}',
+                        'DATA RESERVA: {{ $item->dataReserva }}',
+                        'DATA RETIRADA: {{ $item->dataRetirada }}',
+                        'DATA DEVOLUÇÃO: {{ $item->dataDevolucao }}',
+                        'STATUS: {{ $item->status }}'
+                        )" class="btn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#247BA0" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
                             <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
                         </svg>
@@ -112,7 +100,7 @@
                     </a>
 
                 </td>
-                <form action="{{ route('ferramentas.destroy', $item['id']) }}" method="POST" id="form_{{$item['id']}}">
+                <form action="{{ route('reservas.destroy', $item['id']) }}" method="POST" id="form_{{$item['id']}}">
                     @csrf
                     @method('DELETE')
                 </form>
